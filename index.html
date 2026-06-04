@@ -678,7 +678,7 @@ function pctStr(ratio) {
   return (ratio * 100).toFixed(1) + '%';
 }
 function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ────────────────────────────────────────────
@@ -960,13 +960,13 @@ function renderParamsTable() {
         <td class="text-center">${fmt(total)}</td>
         <td class="text-center"><input class="ratio-input" type="number" min="0" max="100" step="1"
           value="${p['大溪'] || 0}" ${dis ? 'disabled' : ''}
-          onchange="setParam('${escHtml(item.code)}','大溪',this.value)"></td>
+          onchange="setParam(${JSON.stringify(item.code)},'大溪',this.value)"></td>
         <td class="text-center"><input class="ratio-input" type="number" min="0" max="100" step="1"
           value="${p['大肚'] || 0}" ${dis ? 'disabled' : ''}
-          onchange="setParam('${escHtml(item.code)}','大肚',this.value)"></td>
+          onchange="setParam(${JSON.stringify(item.code)},'大肚',this.value)"></td>
         <td class="text-center"><input class="ratio-input" type="number" min="0" max="100" step="1"
           value="${p['岡山'] || 0}" ${dis ? 'disabled' : ''}
-          onchange="setParam('${escHtml(item.code)}','岡山',this.value)"></td>
+          onchange="setParam(${JSON.stringify(item.code)},'岡山',this.value)"></td>
         <td class="text-center"><span class="ratio-sum ${sumClass}">${sumLabel}</span></td>
       </tr>`;
     }
@@ -1154,7 +1154,7 @@ function renderResults() {
   if (!tabs.includes(S.activeTab)) S.activeTab = '全部';
   document.getElementById('tab-bar').innerHTML = tabs.map(t => {
     const cnt = t === '全部' ? res.length : res.filter(r => r.category === t).length;
-    return `<div class="tab ${S.activeTab === t ? 'active' : ''}" onclick="setTab('${escHtml(t)}')">${escHtml(t)} (${cnt})</div>`;
+    return `<div class="tab ${S.activeTab === t ? 'active' : ''}" onclick="setTab(${JSON.stringify(t)})">${escHtml(t)} (${cnt})</div>`;
   }).join('');
 
   // Table
